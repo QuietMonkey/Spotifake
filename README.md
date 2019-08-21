@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Spotifake was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -11,6 +11,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+## `rm -rf node_modules package-lock.json && npm i && npm start`
+
+In case of bug when launching the dev server : try this command to reinstall node_modules after reinitializing package-lock.json
 
 ### `npm test`
 
