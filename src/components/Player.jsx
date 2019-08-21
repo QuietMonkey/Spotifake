@@ -1,55 +1,30 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactHowler from 'react-howler'
 
-class Player extends React.Component {
-  constructor (props) {
-    super(props)
+class Player extends Component {
 
-    this.state = {
-      initialized: false,
-      playing: true
+    state = {
+        playing: false,
+        content: '>'
     }
-    this.handlePlay = this.handlePlay.bind(this)
-    this.handlePause = this.handlePause.bind(this)
-  }
 
-  handlePlay () {
-    this.setState({
-      playing: true
-    })
-  }
-
-  handlePause () {
-    this.setState({
-      playing: false
-    })
-  }
-
-  render () {
-    if (this.state.initialized === true) {
-      return (
-        <div>
-          <ReactHowler
-            src='http://goldfirestudios.com/proj/howlerjs/sound.ogg'
-            playing={this.state.playing}
-          />
-          <button onClick={this.handlePlay}>Play</button>
-          <button onClick={this.handlePause}>Pause</button>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <button
-            className='full'
-            onClick={e => this.setState({initialized: true})}
-          >
-            Initialize Auto Player
-          </button>
-        </div>
-      )
+    handleClickPlay = () => {
+        this.setState({ playing: !this.state.playing })
+        !this.state.playing ? this.setState({content : '||'}) : this.setState({content : '>'})
     }
-  }
+
+    render() {
+        return (
+            <div>
+                <ReactHowler
+                    src='http://goldfirestudios.com/proj/howlerjs/sound.ogg'
+                    playing={this.state.playing}
+                />
+                <button onClick={this.handleClickPlay}>{this.state.content}</button>
+            </div>
+        )
+    }
 }
+
 
 export default Player
