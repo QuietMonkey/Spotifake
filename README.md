@@ -2,7 +2,7 @@ Spotifake was bootstrapped with [Create React App](https://github.com/facebook/c
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the front directory, you can run:
 
 ### `npm start`
 
