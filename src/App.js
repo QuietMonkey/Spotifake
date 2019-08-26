@@ -37,11 +37,11 @@ class App extends Component {
     }
   }
 
-  getReleases = (objProj) => {
+  getReleases = (app) => {
     // Retrieve new releases
     this.spotifyApi.getNewReleases({ limit: 10, offset: 0, country: 'SE' })
       .then(function (data) {
-        objProj.setState({dataRelease : data.body.albums.items})
+        app.setState({dataRelease : data.body.albums.items})
       }, function (err) {
         console.log("Something went wrong!", err)
       })
@@ -50,7 +50,7 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.dataRelease)
+
     return (
 
       <div className="App">
