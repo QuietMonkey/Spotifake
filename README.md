@@ -1,8 +1,17 @@
+To launch the project, clone the repo. Then go to './auth/authorization_code', here you have to use : 
+
+### `npm install && node app.js`
+
+Then you can go to the root folder and use the following script
+
+### `npm i && npm start`
+
+
 Spotifake was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the front directory, you can run:
 
 ### `npm start`
 
