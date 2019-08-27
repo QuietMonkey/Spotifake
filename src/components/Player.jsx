@@ -17,7 +17,7 @@ class Player extends Component {
         return (
             <div>
                 <ReactHowler
-                    src='http://goldfirestudios.com/proj/howlerjs/sound.ogg'
+                    src='https://p.scdn.co/mp3-preview/07c61d627e0537fa0d7f11bbab0c763bd9165d1b?cid=873b1148a2b94911bf9e848a60142cca'
                     playing={this.state.playing}
                 />
                 <button onClick={this.handleClickPlay}>{this.state.content}</button>

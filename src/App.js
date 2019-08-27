@@ -4,6 +4,7 @@ import Modal from 'react-responsive-modal';
 import Player from './components/Player'
 import './App.css';
 import Albums from './components/Albums';
+import Track from './components/Track'
 import Tracks from './components/Tracks';
 
 class App extends Component {
@@ -13,7 +14,9 @@ class App extends Component {
     displayAlbum: [],
     displayArtist: [],
     displayCover: [],
-    displayTracks : []
+    displayTracks: [],
+    playingTrack: '',
+    search: ''
   }
   
 
@@ -57,7 +60,6 @@ class App extends Component {
   getAlbum = (app, idAlbum) => {
     this.spotifyApi.getAlbum(idAlbum)
   .then(function(data) {
-    
     app.setState({displayAlbum: data.body})
     app.setState({displayArtist: data.body.artists[0]})
     app.setState({displayCover: data.body.images[1]})
@@ -67,6 +69,26 @@ class App extends Component {
     console.error(err);
   })
   }
+
+  getSearch = (app, search) => {
+    this.spotifyApi.searchArtists(search)
+      .then(function (data) {
+        console.log('Search artists by "Love"', data.body.artists.items)
+        app.setState({displayArtist: data.body.artists.items})
+      }, function (err) {
+        console.error(err);
+      })
+  }
+
+  // searchArtist = (app) => {
+  //   // Get albums by a certain artist
+  //   this.spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
+  //     .then(function (data) {
+  //       app.setState({ dataRelease: data.body.items })
+  //     }, function (err) {
+  //       console.error(err);
+  //     });
+  // }
 
   onOpenModal = () => {
     this.setState({ modalOpen: true });
@@ -81,6 +103,13 @@ class App extends Component {
     this.onOpenModal()
   }
 
+  handleClickTrack = (id) => {
+    this.setState({playingTrack: id})
+  }
+
+  handleSearch = (e) => {
+    this.getSearch(this, e.target.value)
+  }
 
 
   render() {
@@ -89,14 +118,21 @@ console.log(this.state)
 
       <div className="App">
         <a href='http://localhost:8888' > Login to Spotify </a>
-        
+        <button onClick={this.onOpenModal}>Search</button>
         <Modal open={this.state.modalOpen} onClose={this.onCloseModal} center>
-          <Tracks name={this.state.displayAlbum.name} artist={this.state.displayArtist} cover={this.state.displayCover} tracks={this.state.displayTracks}/>
-
+        <input onChange={this.handleSearch}></input>
+          {Array.isArray(this.state.displayArtist) ? this.state.displayArtist.map((searchArtist) => <Track title={searchArtist.name}/>) 
+          
+          : <Tracks name={this.state.displayAlbum.name} 
+                    artist={this.state.displayArtist} 
+                    cover={this.state.displayCover} 
+                    tracks={this.state.displayTracks}
+                    handleClick={this.handleClickTrack}/> }
         </Modal>
 
         <Albums data={this.state.dataRelease} handleClick={this.handleClickAlbum}/>
         <Player />
+        <iframe src={`https://open.spotify.com/embed/album/${this.state.playingTrack}`} width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
       </div>
 
     )

@@ -11,7 +11,7 @@ const Album = ({title, dataArtists, dataImages, id, handleClick}) => {
     return (
         <div className='album'>
             <img src={srcImage} onClick={handleClickAlbum}/>
-            <h1>{title}</h1>
+            <h1 onClick={handleClickAlbum}>{title}</h1>
             <h2>{artist}</h2>
         </div>
     )

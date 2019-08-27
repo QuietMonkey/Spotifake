@@ -1,10 +1,11 @@
 import React from 'react'
 import Track from './Track';
 
-const Tracks = ({name, artist, cover, tracks}) => {
+const Tracks = ({name, artist, cover, tracks, handleClick}) => {
 
-    const renderingTracks = () => tracks.map((track) => <Track title={track.name} />)
-    
+    const renderingTracks = () => tracks.map((track) => <Track title={track.name} 
+                                                                id={track.id} 
+                                                                handleClick={handleClick} />)
     return(
         <div>
             <img src={cover.url}/>
