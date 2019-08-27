@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
+import Modal from 'react-responsive-modal';
 import Player from './components/Player'
 import './App.css';
 import Albums from './components/Albums';
+import Tracks from './components/Tracks';
 
 class App extends Component {
   state = {
-    accessToken: '',
-    dataRelease: []
+    modalOpen: false,
+    dataRelease: [],
+    displayAlbum: []
   }
+  
 
   componentDidMount() {
     this.setAccessToken()
@@ -47,15 +51,43 @@ class App extends Component {
       })
   }
 
+  getAlbum = (app, idAlbum) => {
+    this.spotifyApi.getAlbum(idAlbum)
+  .then(function(data) {
+    
+    app.setState({displayAlbum: data.body})
+  }, function(err) {
+    console.error(err);
+  })
+  }
+
+  onOpenModal = () => {
+    this.setState({ modalOpen: true });
+  };
+ 
+  onCloseModal = () => {
+    this.setState({ modalOpen: false });
+  };
+
+  handleClickAlbum = (idAlbum) => {
+    this.getAlbum(this, idAlbum)
+    this.onOpenModal()
+  }
+
 
 
   render() {
-
+console.log(this.state)
     return (
 
       <div className="App">
         <a href='http://localhost:8888' > Login to Spotify </a>
-        <Albums data={this.state.dataRelease}/>
+        
+        <Modal open={this.state.modalOpen} onClose={this.onCloseModal} center>
+          <Tracks name={this.state.displayAlbum.name}/>
+        </Modal>
+
+        <Albums data={this.state.dataRelease} handleClick={this.handleClickAlbum}/>
         <Player />
       </div>
 
