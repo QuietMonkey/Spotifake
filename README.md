@@ -1,6 +1,10 @@
 To launch the project, clone the repo. Then go to './auth/authorization_code', here you have to use : 
 
-### `npm install && node app.js`
+### `npm install`
+
+Then go to './auth/authorization_code' and use : 
+
+### `node app.js`
 
 Then you can go to the root folder and use the following script
 
