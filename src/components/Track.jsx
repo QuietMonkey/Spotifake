@@ -3,7 +3,7 @@ import React from 'react'
 const Track = ({title, id, handleClick}) => {
 
     const handleClickTrack = () => {
-        handleClick(id)
+        handleClick(id, title)
     }
 
     return(

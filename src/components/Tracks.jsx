@@ -7,7 +7,7 @@ const Tracks = ({name, artist, cover, tracks, handleClick}) => {
                                                                 id={track.id} 
                                                                 handleClick={handleClick} />)
     return(
-        <div>
+        <div className='modalContent'>
             <img src={cover.url}/>
             <h2>{name}</h2>
             <h3>{artist.name}</h3>
