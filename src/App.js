@@ -16,7 +16,8 @@ class App extends Component {
     displayCover: [],
     displayTracks: [],
     playingTrack: '',
-    search: ''
+    search: '', 
+    modalUse: ''
   }
   
 
@@ -80,15 +81,15 @@ class App extends Component {
       })
   }
 
-  // searchArtist = (app) => {
-  //   // Get albums by a certain artist
-  //   this.spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
-  //     .then(function (data) {
-  //       app.setState({ dataRelease: data.body.items })
-  //     }, function (err) {
-  //       console.error(err);
-  //     });
-  // }
+  searchArtist = (app, id) => {
+    // Get albums by a certain artist
+    this.spotifyApi.getArtistAlbums(id)
+      .then(function (data) {
+        app.setState({ dataRelease: data.body.items })
+      }, function (err) {
+        console.error(err);
+      });
+  }
 
   onOpenModal = () => {
     this.setState({ modalOpen: true });
@@ -100,6 +101,13 @@ class App extends Component {
 
   handleClickAlbum = (idAlbum) => {
     this.getAlbum(this, idAlbum)
+    this.setState({modalUse : 'tracks'})
+    this.onOpenModal()
+  }
+
+  handleClickSearch = () => {
+    this.setState({displayArtist: []})
+    this.setState({modalUse: 'search'})
     this.onOpenModal()
   }
 
@@ -111,6 +119,22 @@ class App extends Component {
     this.getSearch(this, e.target.value)
   }
 
+  handleClickSearchResult = (id) => {
+    this.searchArtist(this, id)
+    this.onCloseModal()
+  }
+
+  renderingSearch = () => {
+    const artistsSearch = this.state.displayArtist.map((searchArtist) => <Track title={searchArtist.name} id={searchArtist.id} handleClick={this.handleClickSearchResult}/>)
+    return(
+      <div>
+        <h3>Rechercher un artiste</h3>
+      <input onChange={this.handleSearch}></input>
+      {artistsSearch}
+      </div>
+    )
+  }
+
 
   render() {
 console.log(this.state)
@@ -118,10 +142,10 @@ console.log(this.state)
 
       <div className="App">
         <a href='http://localhost:8888' > Login to Spotify </a>
-        <button onClick={this.onOpenModal}>Search</button>
+        <button onClick={this.handleClickSearch}>Search</button>
         <Modal open={this.state.modalOpen} onClose={this.onCloseModal} center>
-        <input onChange={this.handleSearch}></input>
-          {Array.isArray(this.state.displayArtist) ? this.state.displayArtist.map((searchArtist) => <Track title={searchArtist.name}/>) 
+
+          {this.state.modalUse === 'search' ?  this.renderingSearch()
           
           : <Tracks name={this.state.displayAlbum.name} 
                     artist={this.state.displayArtist} 
@@ -132,7 +156,7 @@ console.log(this.state)
 
         <Albums data={this.state.dataRelease} handleClick={this.handleClickAlbum}/>
         <Player />
-        <iframe src={`https://open.spotify.com/embed/album/${this.state.playingTrack}`} width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        {/* <iframe src={`https://open.spotify.com/embed/album/${this.state.playingTrack}`} width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> */}
       </div>
 
     )
