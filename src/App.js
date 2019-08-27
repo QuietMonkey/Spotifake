@@ -17,6 +17,7 @@ class App extends Component {
     displayCover: [],
     displayTracks: [],
     playingTrack: '',
+    playingAlbum: '03cgEzN1C7KIQBzoH0rAQm',
     search: '',
     modalUse: ''
   }
@@ -139,6 +140,11 @@ class App extends Component {
     )
   }
 
+  handleClickPlay = (id) => {
+    this.setState({playingAlbum: id})
+    this.onCloseModal()
+  }
+
 
   render() {
     console.log(this.state)
@@ -158,13 +164,21 @@ class App extends Component {
               artist={this.state.displayArtist}
               cover={this.state.displayCover}
               tracks={this.state.displayTracks}
-              handleClick={this.handleClickTrack} />}
+              id={this.state.displayAlbum.id}
+              handleClick={this.handleClickTrack}
+              handleClickPlay={this.handleClickPlay} />}
+
         </Modal>
 
         <h2 className='titleAlbums'>{this.state.title}</h2>
-        <Albums data={this.state.dataRelease} handleClick={this.handleClickAlbum} handleClickArtist={this.handleClickSearchResult} />
-        <Player url={this.state.playingTrack} />
-        {/* <iframe src={`https://open.spotify.com/embed/album/${this.state.playingTrack}`} width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> */}
+        <Albums data={this.state.dataRelease} 
+                handleClick={this.handleClickAlbum} 
+                handleClickArtist={this.handleClickSearchResult} />
+
+        {/* <Player url={this.state.playingTrack} /> */}
+        <div className='playerWidget'>
+        <iframe src={`https://open.spotify.com/embed/album/${this.state.playingAlbum}`} width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
       </div>
 
     )
