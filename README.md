@@ -1,4 +1,4 @@
-To launch the project, clone the repo. Then go to './auth/authorization_code', here you have to use : 
+To launch the project, clone the repo. Then go to './auth', here you have to use : 
 
 ### `npm install`
 
