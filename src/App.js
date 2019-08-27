@@ -10,7 +10,10 @@ class App extends Component {
   state = {
     modalOpen: false,
     dataRelease: [],
-    displayAlbum: []
+    displayAlbum: [],
+    displayArtist: [],
+    displayCover: [],
+    displayTracks : []
   }
   
 
@@ -56,6 +59,10 @@ class App extends Component {
   .then(function(data) {
     
     app.setState({displayAlbum: data.body})
+    app.setState({displayArtist: data.body.artists[0]})
+    app.setState({displayCover: data.body.images[1]})
+    app.setState({displayTracks: data.body.tracks.items})
+
   }, function(err) {
     console.error(err);
   })
@@ -84,7 +91,8 @@ console.log(this.state)
         <a href='http://localhost:8888' > Login to Spotify </a>
         
         <Modal open={this.state.modalOpen} onClose={this.onCloseModal} center>
-          <Tracks name={this.state.displayAlbum.name}/>
+          <Tracks name={this.state.displayAlbum.name} artist={this.state.displayArtist} cover={this.state.displayCover} tracks={this.state.displayTracks}/>
+
         </Modal>
 
         <Albums data={this.state.dataRelease} handleClick={this.handleClickAlbum}/>
