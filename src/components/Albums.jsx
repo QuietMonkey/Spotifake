@@ -1,9 +1,17 @@
 import React from 'react'
 import Album from './Album'
 
-const Albums = ({data}) => {
+const Albums = ({data, handleClick, handleClickArtist}) => {
+    const displayAlbums = data.map((album) => <Album title={album.name}
+                                                    dataArtists={album.artists}
+                                                    dataImages={album.images}
+                                                    id={album.id}
+                                                    handleClick={handleClick}
+                                                    handleClickArtist={handleClickArtist}/>)
     return(
-    data.map((album) => <Album title={album.name}/>)
+        <div className='albums'>
+            {displayAlbums}
+        </div>
     )
 }
 

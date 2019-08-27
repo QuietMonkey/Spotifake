@@ -13,11 +13,13 @@ class Player extends Component {
         !this.state.playing ? this.setState({content : '||'}) : this.setState({content : '>'})
     }
 
+    urlSong = `spotify:track:${this.props.url}`
+
     render() {
         return (
             <div>
                 <ReactHowler
-                    src='http://goldfirestudios.com/proj/howlerjs/sound.ogg'
+                    src= {this.urlSong}
                     playing={this.state.playing}
                 />
                 <button onClick={this.handleClickPlay}>{this.state.content}</button>
