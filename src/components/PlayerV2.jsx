@@ -9,15 +9,20 @@ class PlayerV2 extends Component {
       deviceId: "",
       loggedIn: false,
       error: "",
-      trackName: "Track Name",
-      artistName: "Artist Name",
-      albumName: "Album Name",
+      trackName: "",
+      artistName: "",
+      albumName: "",
       playing: false,
       position: 0,
       duration: 1,
     };
     // this will later be set by setInterval
     this.playerCheckInterval = null;
+  }
+
+  componentWillReceiveProps() {
+    this.setState({token: this.props.token})
+    this.handleLogin()
   }
   
   // when we click the "go" button
@@ -150,15 +155,8 @@ class PlayerV2 extends Component {
     
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>Now Playing</h2>
-          <p>A Spotify Web Playback API Demo.</p>
-        </div>
-      
         {error && <p>Error: {error}</p>}
-      
-        {loggedIn ?
-        (<div>      
+      <div>      
           <p>Artist: {artistName}</p>
           <p>Track: {trackName}</p>
           <p>Album: {albumName}</p>
@@ -167,25 +165,9 @@ class PlayerV2 extends Component {
             <button onClick={() => this.onPlayClick()}>{playing ? "Pause" : "Play"}</button>
             <button onClick={() => this.onNextClick()}>Next</button>
           </p>
-        </div>)
-        :  
-        (<div>
-          <p className="App-intro">
-            Enter your Spotify access token. Get it from{" "}
-            <a href="https://beta.developer.spotify.com/documentation/web-playback-sdk/quick-start/#authenticating-with-spotify">
-              here
-            </a>.
-          </p>
-          <p>
-            <input type="text" value={token} onChange={e => this.setState({ token: e.target.value })} />
-          </p>
-          <p>
-            <button onClick={() => this.handleLogin()}>Go</button>
-          </p>
-        </div>)
-        }
+        </div>
       </div>
-    );
+    )
   }
 }
 

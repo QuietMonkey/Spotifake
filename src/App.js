@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
 import Modal from 'react-responsive-modal'
+import Player from './components/Player'
 import PlayerV2 from './components/PlayerV2'
 import './App.css';
 import Albums from './components/Albums'
@@ -9,6 +10,7 @@ import Tracks from './components/Tracks'
 
 class App extends Component {
   state = {
+    token: '',
     logged: false,
     modalOpen: false,
     dataRelease: [],
@@ -47,6 +49,7 @@ class App extends Component {
     const token = params.access_token
     if (token) {
       this.spotifyApi.setAccessToken(token)
+      this.setState({ token: token})
       this.setState({ logged: true })
     }
   }
@@ -175,12 +178,12 @@ class App extends Component {
                 handleClick={this.handleClickAlbum} 
                 handleClickArtist={this.handleClickSearchResult} />
 
-        {/* <Player url={this.state.playingTrack} /> */}
+        <Player url={this.state.playingTrack} />
         {/* <div className='playerWidget'>
         <iframe src={`https://open.spotify.com/embed/album/${this.state.playingAlbum}`} width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div> */}
 
-        <PlayerV2 />
+        {/* <PlayerV2 token={this.state.token}/> */}
       </div>
 
     )
