@@ -40,12 +40,13 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
-    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>   
     <script>
       window.onSpotifyWebPlaybackSDKReady = () => {
-        window.Spotify = Spotify;
-      }
-    </script>
+        console.log("The Web Playback SDK is ready. We have access to Spotify.Player");
+        console.log(window.Spotify.Player);
+      };
+      </script>
     
   </body>
 </html>

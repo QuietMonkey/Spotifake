@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
 import Modal from 'react-responsive-modal'
 import Player from './components/Player'
-import PlayerV2 from './components/PlayerV2'
+import PlayerV3 from './components/PlayerV3'
 import './App.css';
 import Albums from './components/Albums'
 import Track from './components/Track'
@@ -183,7 +183,7 @@ class App extends Component {
         <iframe src={`https://open.spotify.com/embed/album/${this.state.playingAlbum}`} width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div> */}
 
-        {/* <PlayerV2 token={this.state.token}/> */}
+        <PlayerV3 token={this.state.token}/>
       </div>
 
     )

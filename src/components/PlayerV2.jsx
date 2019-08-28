@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 
 class PlayerV2 extends Component {
-  constructor(props) {
-    super(props);
-    // set the initial state
-    this.state = {
+  state = {
       token: "",
       deviceId: "",
       loggedIn: false,
       error: "",
+      spotify_uri: "spotify:track:7xGfFoTpQ2E7fRF5lN10tr",
       trackName: "",
       artistName: "",
       albumName: "",
       playing: false,
       position: 0,
       duration: 1,
-    };
-    // this will later be set by setInterval
-    this.playerCheckInterval = null;
-  }
+    }
+  playerCheckInterval = null;
 
   componentWillReceiveProps() {
     this.setState({token: this.props.token})
@@ -103,6 +99,7 @@ class PlayerV2 extends Component {
       this.player = new window.Spotify.Player({
         name: "Spotifake",
         getOAuthToken: cb => { cb(token); },
+        
       });
       // set up the player's event handlers
       this.createEventHandlers();
@@ -141,8 +138,39 @@ class PlayerV2 extends Component {
       }),
     });
   }
+
+  play = (spotify_uri) => {
+    const { deviceId, token } = this.state;
+  
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ uris: [spotify_uri] }),
+    });
+  }
+
+  waitForSpotifyWebPlaybackSDKToLoad = async() => {
+    return new Promise(resolve => {
+      if (window.Spotify) {
+        resolve(window.Spotify);
+      } else {
+        window.onSpotifyWebPlaybackSDKReady = () => {
+          resolve(window.Spotify);
+        };
+      }
+    });
+  };
   
   render() {
+
+    (async () => {
+      const { Player } = await this.waitForSpotifyWebPlaybackSDKToLoad();
+      console.log("The Web Playback SDK has loaded.");
+    })();
+
     const {
       token,
       loggedIn,
@@ -156,7 +184,7 @@ class PlayerV2 extends Component {
     return (
       <div className="App">
         {error && <p>Error: {error}</p>}
-      <div>      
+      <div>  
           <p>Artist: {artistName}</p>
           <p>Track: {trackName}</p>
           <p>Album: {albumName}</p>
