@@ -3,6 +3,7 @@ import SpotifyWebApi from 'spotify-web-api-node'
 import Modal from 'react-responsive-modal'
 import Player from './components/Player'
 import PlayerV3 from './components/PlayerV3'
+import SpotifyPlayer from 'react-spotify-web-playback';
 import './App.css';
 import Albums from './components/Albums'
 import Track from './components/Track'
@@ -178,12 +179,18 @@ class App extends Component {
                 handleClick={this.handleClickAlbum} 
                 handleClickArtist={this.handleClickSearchResult} />
 
-        <Player url={this.state.playingTrack} />
+        {/* <Player url={this.state.playingTrack} /> */}
         {/* <div className='playerWidget'>
         <iframe src={`https://open.spotify.com/embed/album/${this.state.playingAlbum}`} width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div> */}
 
-        <PlayerV3 token={this.state.token}/>
+        <PlayerV3 token={this.state.token} idTrack={this.state.playingTrack}/>
+
+{/* 
+        <SpotifyPlayer
+          token= {'BQCpOuLBWiX4atadOFSi1nCB56d-eJ37sFwdCMbj-pWt3NIAM1nb6F7LAghrlZ_hbClma9xmjKJMQgBFqisA2kZAJGxx2uIPrt83H-UupxSKxdVjBXHA2APc2LmOVfLVsL61vJ3rnuJRfOO3JARw7EDwsO0BylK63YwXhQTtTrf0ORCfAAzlivNevj5nLOvCoALqV4HiXRniXA'}
+          uris={['spotify:artist:6HQYnRM4OzToCYPpVBInuU']}
+        />; */}
       </div>
 
     )
