@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
 import Modal from 'react-responsive-modal'
-import Player from './components/Player'
 import PlayerV5 from './components/PlayerV5'
-import SpotifyPlayer from 'react-spotify-web-playback';
 import './App.css';
 import Albums from './components/Albums'
 import Track from './components/Track'
