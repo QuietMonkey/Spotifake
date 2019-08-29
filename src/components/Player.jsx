@@ -19,7 +19,7 @@ class Player extends Component {
         return (
             <div>
                 <ReactHowler
-                    src= {this.urlSong}
+                    src= "https://api.spotify.com/v1/tracks/5SiPF66MWD55UCrvVKWufG"
                     playing={this.state.playing}
                 />
                 <button onClick={this.handleClickPlay}>{this.state.content}</button>
