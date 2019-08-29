@@ -1,3 +1,7 @@
+[WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP] [WIP]
+
+To ear song from the player SDK [WIP] you need to use Firefox and authorize the website to play song.
+
 To launch the project, clone the repo. Then go to './auth/authorization_code', here you have to use : 
 
 ### `npm install && node app.js`

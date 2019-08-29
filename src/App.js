@@ -124,18 +124,7 @@ class App extends Component {
     this.displayAlbums()
   }
 
-  renderingSearch = () => {
-    const artistsSearch = this.state.displayArtist.map((searchArtist) => <Track title={searchArtist.name} id={searchArtist.id} handleClick={this.handleClickSearchResult} />)
-    return (
-      <div className='search'>
-        <h3>Rechercher un artiste</h3>
-        <input onChange={this.handleSearch}></input>
-        <div className='results'>
-          {artistsSearch}
-        </div>
-      </div>
-    )
-  }
+  artistsSearch = () => this.state.displayArtist.map((searchArtist) => <Track title={searchArtist.name} id={searchArtist.id} handleClick={this.handleClickSearchResult} />)
 
   displayAlbums = () => {
     const albums = document.querySelector('.albumsContainer')
@@ -172,7 +161,6 @@ class App extends Component {
 
         </Modal>
 
-        
         <Albums data={this.state.dataRelease} 
                 handleClick={this.handleClickAlbum} 
                 handleClickArtist={this.handleClickSearchResult}
@@ -180,17 +168,22 @@ class App extends Component {
 
         {this.renderingSearch}
 
-  
+        <div className='search'>
+        <h3>Rechercher un artiste</h3>
+        <input onChange={this.handleSearch}></input>
+        <div className='results'>
+          {this.artistsSearch()}
+        </div>
+      </div>
 
-        
+        {this.state.logged ? 
         <div className='buttons'>
           <h3>User</h3>
           <h3 onClick={this.displayAlbums}>Released</h3>
           <h3 onClick={this.onClickSearch}>Search</h3>
-        </div>
-
+        </div> : null} 
+        
         {this.state.logged ? <PlayerV5 token={this.state.token} idTrack={this.state.playingTrack}/> : null}
-
 
       </div>
 
