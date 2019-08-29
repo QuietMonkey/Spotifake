@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
 import Modal from 'react-responsive-modal'
-import Player from './components/Player'
 import PlayerV5 from './components/PlayerV5'
-import SpotifyPlayer from 'react-spotify-web-playback';
 import './App.css';
 import Albums from './components/Albums'
 import Track from './components/Track'
@@ -101,11 +99,11 @@ class App extends Component {
 
   onOpenModal = () => {
     this.setState({ modalOpen: true });
-  };
+  }
 
   onCloseModal = () => {
     this.setState({ modalOpen: false });
-  };
+  }
 
   handleClickAlbum = (idAlbum) => {
     this.getAlbum(this, idAlbum)
@@ -156,7 +154,7 @@ class App extends Component {
 
       <div className="App">
         <div className='header'>
-          {this.state.logged ? null : <a href='http://localhost:8888' > Login to Spotify </a>}
+          {this.state.logged ? null : <div className='login'><a href='http://localhost:8888' className='loginButton'> Login to Spotify </a></div>}
           {this.state.logged ? <button onClick={this.handleClickSearch}>Search</button> : null}
         </div>
 
@@ -175,23 +173,14 @@ class App extends Component {
         </Modal>
 
         <h2 className='titleAlbums'>{this.state.title}</h2>
+
+        
         <Albums data={this.state.dataRelease} 
                 handleClick={this.handleClickAlbum} 
                 handleClickArtist={this.handleClickSearchResult} />
 
-        {/* <Player url={this.state.playingTrack} /> */}
-        {/* <div className='playerWidget'>
-        <iframe src={`https://open.spotify.com/embed/album/${this.state.playingAlbum}`} width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-        </div> */}
+        {this.state.logged ? <PlayerV5 token={this.state.token} idTrack={this.state.playingTrack}/> : null}
 
-        <PlayerV5 token={this.state.token} idTrack={this.state.playingTrack}/>
-
-
-        {/* <SpotifyPlayer
-          token={this.state.token}
-          uris={[`spotify:track:${this.state.playingTrack}`]}
-          name= {'Spotifake'}
-        />;  */}
 
       </div>
 
