@@ -21,56 +21,56 @@ class PlayerV2 extends Component {
     this.setState({spotify_uri: `spotify:track:${this.props.idTrack}`})
   }}
 
-  renderPlayer = () => {return(window.onSpotifyWebPlaybackSDKReady = () => {
-      
-    var player = new window.Spotify.Player({
-      name: 'Spotifake',
-      getOAuthToken: callback => {
-        callback(this.state.token);
-      },
-      volume: .4
-    })
-    
-    // Called when connected to the player created beforehand successfully
-  player.addListener('ready', ({ device_id }) => {
-    console.log('Ready with Device ID', device_id)
-    this.setState({deviceId: device_id});
-
-    const play = ({
-      spotify_uri,
-      playerInstance: {
-        _options: {
-          getOAuthToken,
-          id
-        }
-      }
-    }) => {
-      getOAuthToken(access_token => {
-        fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
-          method: 'PUT',
-          body: JSON.stringify({ uris: [spotify_uri] }),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.state.token}`
-          },
-        });
-      });
-    };
-    
-    play({
-      playerInstance: player,
-      spotify_uri: this.state.spotify_uri,
-    });
-  });
-  
-  // Connect to the player created beforehand, this is equivalent to 
-  // creating a new device which will be visible for Spotify Connect
-  player.connect();
-  
-  });}
-
   
   render() {
+
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      
+      var player = new window.Spotify.Player({
+        name: 'Spotifake',
+        getOAuthToken: callback => {
+          callback(this.state.token);
+        },
+        volume: .4
+      })
+      
+      // Called when connected to the player created beforehand successfully
+    player.addListener('ready', ({ device_id }) => {
+      console.log('Ready with Device ID', device_id)
+      this.setState({deviceId: device_id});
+  
+      const play = ({
+        spotify_uri,
+        playerInstance: {
+          _options: {
+            getOAuthToken,
+            id
+          }
+        }
+      }) => {
+        getOAuthToken(access_token => {
+          fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ uris: [spotify_uri] }),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${this.state.token}`
+            },
+          });
+        });
+      };
+      
+      play({
+        playerInstance: player,
+        spotify_uri: this.state.spotify_uri,
+      });
+    });
+    
+    // Connect to the player created beforehand, this is equivalent to 
+    // creating a new device which will be visible for Spotify Connect
+    player.connect();
+    
+    }
 
     const {
       token,
@@ -91,7 +91,7 @@ class PlayerV2 extends Component {
           <p>Album: {albumName}</p>
           <p>
             <button onClick={() => this.onPrevClick()}>Previous</button>
-            <button onClick={this.renderPlayer()}>{playing ? "Pause" : "Play"}</button>
+            <button >{playing ? "Pause" : "Play"}</button>
             <button onClick={() => this.onNextClick()}>Next</button>
           </p>
         </div>

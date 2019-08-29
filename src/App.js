@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
 import Modal from 'react-responsive-modal'
 import Player from './components/Player'
-import PlayerV3 from './components/PlayerV3'
+import PlayerV5 from './components/PlayerV5'
 import SpotifyPlayer from 'react-spotify-web-playback';
 import './App.css';
 import Albums from './components/Albums'
@@ -19,7 +19,7 @@ class App extends Component {
     displayArtist: [],
     displayCover: [],
     displayTracks: [],
-    playingTrack: '',
+    playingTrack: '17qjFoBop2OQwcncOTad1t',
     playingAlbum: '03cgEzN1C7KIQBzoH0rAQm',
     search: '',
     modalUse: ''
@@ -184,13 +184,15 @@ class App extends Component {
         <iframe src={`https://open.spotify.com/embed/album/${this.state.playingAlbum}`} width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div> */}
 
-        <PlayerV3 token={this.state.token} idTrack={this.state.playingTrack}/>
+        <PlayerV5 token={this.state.token} idTrack={this.state.playingTrack}/>
 
-{/* 
-        <SpotifyPlayer
-          token= {'BQCpOuLBWiX4atadOFSi1nCB56d-eJ37sFwdCMbj-pWt3NIAM1nb6F7LAghrlZ_hbClma9xmjKJMQgBFqisA2kZAJGxx2uIPrt83H-UupxSKxdVjBXHA2APc2LmOVfLVsL61vJ3rnuJRfOO3JARw7EDwsO0BylK63YwXhQTtTrf0ORCfAAzlivNevj5nLOvCoALqV4HiXRniXA'}
-          uris={['spotify:artist:6HQYnRM4OzToCYPpVBInuU']}
-        />; */}
+
+        {/* <SpotifyPlayer
+          token={this.state.token}
+          uris={[`spotify:track:${this.state.playingTrack}`]}
+          name= {'Spotifake'}
+        />;  */}
+
       </div>
 
     )
