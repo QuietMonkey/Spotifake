@@ -23,6 +23,7 @@
 .titleAlbums {
   color: white;
   font-size: 1.5em;
+  margin-top: 0;
 }
 
 .albums{
@@ -59,6 +60,29 @@
   cursor: pointer;
 }
 
+.search {
+  display: none;
+  flex-direction: column;
+}
+
+.search > input {
+  width: 350px;
+  align-self: center
+}
+
+.search > h3 {
+  color: white;
+}
+
+.search > h4 {
+  cursor: pointer;
+}
+
+.results {
+  height: 45vh;
+  overflow: scroll;
+}
+
 .modalContent > h4{
   cursor: pointer;
 }
@@ -84,4 +108,19 @@
   left: 0%;
   z-index: 8;
   width: 100%;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttons > h3 {
+  color: black;
+  background: rgb(223, 165, 42);
+  margin-top: 250px;
+  padding: 12px;
+  border-radius: 35px;
+  font-size: 2em;
+  margin: 25px;
 }

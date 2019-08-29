@@ -107,13 +107,6 @@ class App extends Component {
 
   handleClickAlbum = (idAlbum) => {
     this.getAlbum(this, idAlbum)
-    this.setState({ modalUse: 'tracks' })
-    this.onOpenModal()
-  }
-
-  handleClickSearch = () => {
-    this.setState({ displayArtist: [] })
-    this.setState({ modalUse: 'search' })
     this.onOpenModal()
   }
 
@@ -127,26 +120,36 @@ class App extends Component {
 
   handleClickSearchResult = (id, title) => {
     this.searchArtist(this, id)
-    this.onCloseModal()
     this.setState({ title : `Albums de ${title}` })
+    this.displayAlbums()
   }
 
   renderingSearch = () => {
     const artistsSearch = this.state.displayArtist.map((searchArtist) => <Track title={searchArtist.name} id={searchArtist.id} handleClick={this.handleClickSearchResult} />)
     return (
-      <div className='modalContent'>
+      <div className='search'>
         <h3>Rechercher un artiste</h3>
         <input onChange={this.handleSearch}></input>
-        {artistsSearch}
+        <div className='results'>
+          {artistsSearch}
+        </div>
       </div>
     )
   }
 
-  handleClickPlay = (id) => {
-    this.setState({playingAlbum: id})
-    this.onCloseModal()
+  displayAlbums = () => {
+    const albums = document.querySelector('.albumsContainer')
+    const search = document.querySelector('.search')
+    albums.style.display = 'flex'
+    search.style.display = 'none'
   }
 
+  onClickSearch = () => {
+    const albums = document.querySelector('.albumsContainer')
+    const search = document.querySelector('.search')
+    albums.style.display = 'none'
+    search.style.display = 'flex'
+  }
 
   render() {
     console.log(this.state)
@@ -155,29 +158,36 @@ class App extends Component {
       <div className="App">
         <div className='header'>
           {this.state.logged ? null : <div className='login'><a href='http://localhost:8888' className='loginButton'> Login to Spotify </a></div>}
-          {this.state.logged ? <button onClick={this.handleClickSearch}>Search</button> : null}
         </div>
 
         <Modal open={this.state.modalOpen} onClose={this.onCloseModal} center>
 
-          {this.state.modalUse === 'search' ? this.renderingSearch()
-
-            : <Tracks name={this.state.displayAlbum.name}
+             <Tracks name={this.state.displayAlbum.name}
               artist={this.state.displayArtist}
               cover={this.state.displayCover}
               tracks={this.state.displayTracks}
               id={this.state.displayAlbum.id}
               handleClick={this.handleClickTrack}
-              handleClickPlay={this.handleClickPlay} />}
+              handleClickPlay={this.handleClickPlay} />
 
         </Modal>
-
-        <h2 className='titleAlbums'>{this.state.title}</h2>
 
         
         <Albums data={this.state.dataRelease} 
                 handleClick={this.handleClickAlbum} 
-                handleClickArtist={this.handleClickSearchResult} />
+                handleClickArtist={this.handleClickSearchResult}
+                title = {this.state.title} />
+
+        {this.renderingSearch}
+
+  
+
+        
+        <div className='buttons'>
+          <h3>User</h3>
+          <h3 onClick={this.displayAlbums}>Released</h3>
+          <h3 onClick={this.onClickSearch}>Search</h3>
+        </div>
 
         {this.state.logged ? <PlayerV5 token={this.state.token} idTrack={this.state.playingTrack}/> : null}
 

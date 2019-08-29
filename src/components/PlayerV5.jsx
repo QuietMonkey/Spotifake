@@ -39,6 +39,8 @@ class PlayerV2 extends Component {
                 })
             })
 
+            this.state.player.on('player_state_changed', state => this.onStateChanged(state));
+
             // Called when connected to the player created beforehand successfully
             this.state.player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id)
@@ -71,6 +73,7 @@ class PlayerV2 extends Component {
                 });
             });
 
+            
 
             // Connect to the player created beforehand, this is equivalent to 
             // creating a new device which will be visible for Spotify Connect
@@ -120,18 +123,51 @@ class PlayerV2 extends Component {
                 });
             };
 
+            
+
             play({
                 playerInstance: this.state.player,
                 spotify_uri: `spotify:track:${IDspotify_uri}`,
             });
         });
 
+
+
         // Connect to the player created beforehand, this is equivalent to 
         // creating a new device which will be visible for Spotify Connect
         this.state.player.connect();
-
-
     }
+
+    
+  // when we receive a new update from the player
+  onStateChanged(state) {
+    // only update if we got a real state
+    if (state !== null) {
+      const {
+        current_track: currentTrack,
+        position,
+        duration,
+      } = state.track_window;
+      const trackName = currentTrack.name;
+      const albumName = currentTrack.album.name;
+      const artistName = currentTrack.artists
+        .map(artist => artist.name)
+        .join(", ");
+      const playing = !state.paused;
+      this.setState({
+        position,
+        duration,
+        trackName,
+        albumName,
+        artistName,
+        playing
+      });
+    } else {
+      // state was null, user might have swapped to another device
+      this.setState({ error: "Looks like you might have swapped to another device?" });
+    }
+  }
+
         
     
 
@@ -146,7 +182,7 @@ class PlayerV2 extends Component {
         } = this.state;
 
         return (
-            <div className="App">
+            <div className="Player">
                 {error && <p>Error: {error}</p>}
                 <div>
                     <p>Artist: {artistName}</p>
