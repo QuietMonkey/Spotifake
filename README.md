@@ -1,3 +1,5 @@
+Web Player SDK spotify is [WIP] click a lot on a title before it launch. You need to be on Firefox and authorize pages to launch sound in your firefox's security setting. You also need a premium spotify account, else you can't listen song in this app.
+
 To launch the project, clone the repo. Then go to './auth', here you have to use : 
 
 ### `npm install`
