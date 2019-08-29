@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
-import Modal from 'react-responsive-modal';
+import Modal from 'react-responsive-modal'
 import Player from './components/Player'
+import PlayerV5 from './components/PlayerV5'
+import SpotifyPlayer from 'react-spotify-web-playback';
 import './App.css';
-import Albums from './components/Albums';
+import Albums from './components/Albums'
 import Track from './components/Track'
-import Tracks from './components/Tracks';
+import Tracks from './components/Tracks'
 
 class App extends Component {
   state = {
+    token: '',
     logged: false,
     modalOpen: false,
     dataRelease: [],
@@ -16,7 +19,7 @@ class App extends Component {
     displayArtist: [],
     displayCover: [],
     displayTracks: [],
-    playingTrack: '',
+    playingTrack: '17qjFoBop2OQwcncOTad1t',
     playingAlbum: '03cgEzN1C7KIQBzoH0rAQm',
     search: '',
     modalUse: ''
@@ -47,6 +50,7 @@ class App extends Component {
     const token = params.access_token
     if (token) {
       this.spotifyApi.setAccessToken(token)
+      this.setState({ token: token})
       this.setState({ logged: true })
     }
   }
@@ -176,9 +180,19 @@ class App extends Component {
                 handleClickArtist={this.handleClickSearchResult} />
 
         {/* <Player url={this.state.playingTrack} /> */}
-        <div className='playerWidget'>
+        {/* <div className='playerWidget'>
         <iframe src={`https://open.spotify.com/embed/album/${this.state.playingAlbum}`} width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-        </div>
+        </div> */}
+
+        <PlayerV5 token={this.state.token} idTrack={this.state.playingTrack}/>
+
+
+        {/* <SpotifyPlayer
+          token={this.state.token}
+          uris={[`spotify:track:${this.state.playingTrack}`]}
+          name= {'Spotifake'}
+        />;  */}
+
       </div>
 
     )
